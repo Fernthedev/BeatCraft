@@ -2,8 +2,8 @@ package com.beatcraft;
 
 
 import com.beatcraft.audio.BeatmapAudioPlayer;
-import com.beatcraft.beatmap.data.CutDirection;
 import com.beatcraft.render.BeatmapPlayer;
+import com.github.fernthedev.beatmap.NoteCutDirection;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -110,17 +110,17 @@ public class BeatCraftClient implements ClientModInitializer {
         return 1;
     }
 
-    private CutDirection getCutFromString(String cutDirection) {
+    private NoteCutDirection getCutFromString(String cutDirection) {
         return switch (cutDirection) {
-            case "up" -> CutDirection.UP;
-            case "left" -> CutDirection.LEFT;
-            case "right" -> CutDirection.RIGHT;
-            case "up_left", "left_up", "upleft", "leftup" -> CutDirection.UP_LEFT;
-            case "down_left", "left_down", "downleft", "leftdown" -> CutDirection.DOWN_LEFT;
-            case "up_right", "right_up", "upright", "rightup" -> CutDirection.UP_RIGHT;
-            case "down_right", "right_down", "downright", "rightdown" -> CutDirection.DOWN_RIGHT;
-            case "dot" -> CutDirection.DOT;
-            default -> CutDirection.DOWN;
+            case "up" -> NoteCutDirection.Up;
+            case "left" -> NoteCutDirection.Left;
+            case "right" -> NoteCutDirection.Right;
+            case "up_left", "left_up", "upleft", "leftup" -> NoteCutDirection.UpLeft;
+            case "down_left", "left_down", "downleft", "leftdown" -> NoteCutDirection.DownLeft;
+            case "up_right", "right_up", "upright", "rightup" -> NoteCutDirection.UpRight;
+            case "down_right", "right_down", "downright", "rightdown" -> NoteCutDirection.DownRight;
+            case "dot" -> NoteCutDirection.Any;
+            default -> NoteCutDirection.Down;
         };
     }
 

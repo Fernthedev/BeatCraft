@@ -1,11 +1,10 @@
 package com.beatcraft.animation.pointdefinition;
 
-import com.beatcraft.animation.Easing;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class PointDefinition<T> {
-    protected ArrayList<Point<T>> points = new ArrayList<>();
+    protected List<Point<T>> points = new ArrayList<>();
 
     abstract protected T interpolatePoints(int a, int b, float time);
 
@@ -14,7 +13,7 @@ public abstract class PointDefinition<T> {
             return null;
         }
 
-        Point<T> lastPoint = points.getLast();
+        Point<T> lastPoint = points.getFirst();
         if (lastPoint.time <= time) {
             return lastPoint.value;
         }

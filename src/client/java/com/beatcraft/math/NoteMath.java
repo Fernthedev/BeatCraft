@@ -1,6 +1,6 @@
 package com.beatcraft.math;
 
-import com.beatcraft.beatmap.data.CutDirection;
+import com.github.fernthedev.beatmap.NoteCutDirection;
 import org.joml.Math;
 import org.joml.Quaternionf;
 
@@ -26,16 +26,16 @@ public class NoteMath {
         return new Quaternionf().rotateZ(Math.toRadians(degrees));
     }
 
-    public static Quaternionf rotationFromCut(CutDirection cutDirection) {
+    public static Quaternionf rotationFromCut(NoteCutDirection cutDirection) {
         return switch (cutDirection) {
-            case UP -> rotationZDegrees(180);
-            case DOWN, DOT -> new Quaternionf();
-            case LEFT -> rotationZDegrees(90);
-            case RIGHT -> rotationZDegrees(-90);
-            case UP_LEFT -> rotationZDegrees(135);
-            case UP_RIGHT -> rotationZDegrees(-135);
-            case DOWN_LEFT -> rotationZDegrees(45);
-            case DOWN_RIGHT -> rotationZDegrees(-45);
+            case NoteCutDirection.Up -> rotationZDegrees(180);
+            case NoteCutDirection.Down, NoteCutDirection.Any, NoteCutDirection.None -> new Quaternionf();
+            case NoteCutDirection.Left -> rotationZDegrees(90);
+            case NoteCutDirection.Right -> rotationZDegrees(-90);
+            case NoteCutDirection.UpLeft-> rotationZDegrees(135);
+            case NoteCutDirection.UpRight-> rotationZDegrees(-135);
+            case NoteCutDirection.DownLeft-> rotationZDegrees(45);
+            case NoteCutDirection.DownRight -> rotationZDegrees(-45);
         };
     }
 }

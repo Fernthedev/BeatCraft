@@ -114,7 +114,7 @@ public class BeatmapPlayer {
 
         // Render beatmap
         if (currentBeatmap != null) {
-            for (var obj : currentBeatmap.colorNotes) {
+            for (var obj : currentBeatmap.physicalColorNoteList) {
                 obj.render(matrices, tickDelta, limitTime, renderBlockOutline, camera, gameRenderer, lightmapTextureManager, projectionMatrix);
             }
         }

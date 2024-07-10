@@ -1,5 +1,7 @@
 package com.beatcraft.math;
 
+import org.joml.Math;
+
 public class GenericMath {
     public static float inverseLerp(float a, float b, float t) {
         return (t - a) / (b - a);

@@ -1,9 +1,12 @@
 package com.beatcraft.render;
 
 import com.beatcraft.animation.Easing;
-import com.beatcraft.beatmap.data.GameplayObject;
+import com.beatcraft.beatmap.JsonUtil;
+import com.beatcraft.beatmap.data.Info;
 import com.beatcraft.math.GenericMath;
 import com.beatcraft.math.NoteMath;
+import com.github.fernthedev.beatmap.IBeatmapObject;
+import kotlinx.serialization.json.JsonElement;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Math;
@@ -11,7 +14,9 @@ import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-public abstract class PhysicalBeatmapObject<T extends GameplayObject> extends WorldRenderer {
+import java.util.Map;
+
+public abstract class PhysicalBeatmapObject<T extends IBeatmapObject> extends WorldRenderer {
     private static final float JUMP_FAR_Z = 500;
     private static final float JUMP_SECONDS = 0.4f;
     protected static final float SIZE_SCALAR = 0.5f;
@@ -23,17 +28,35 @@ public abstract class PhysicalBeatmapObject<T extends GameplayObject> extends Wo
     public Quaternionf rotation = new Quaternionf();
     public Vector3f scale = new Vector3f(1,1,1);
 
-    PhysicalBeatmapObject(T data) {
+    public final float njs;
+    public final float offset;
+
+    PhysicalBeatmapObject(Info.SetDifficulty setDifficulty, T data) {
+        Map<String, JsonElement> customData = data.getCustomData();
+
+        if (customData.containsKey("_noteJumpMovementSpeed"))
+            njs = JsonUtil.jsonElementToFloat(customData.get("_noteJumpMovementSpeed"));
+        else {
+            njs = setDifficulty.njs;
+        }
+
+        if (customData.containsKey("_noteJumpStartBeatOffset")) {
+            offset = JsonUtil.jsonElementToFloat(customData.get("_noteJumpStartBeatOffset"));
+        }
+        else {
+            offset = setDifficulty.offset;
+        }
+
         this.data = data;
-        this.jumps = NoteMath.getJumps(data.njs, data.offset, BeatmapPlayer.currentInfo.bpm);
+        this.jumps = NoteMath.getJumps(njs, offset, BeatmapPlayer.currentInfo.bpm);
     }
 
     public float getSpawnBeat() {
-        return data.beat - jumps.halfDuration();
+        return data.getTime() - jumps.halfDuration();
     }
 
     public float getDespawnBeat() {
-        return data.beat + jumps.halfDuration();
+        return data.getTime() + jumps.halfDuration();
     }
 
     public boolean shouldRender() {
@@ -73,8 +96,8 @@ public abstract class PhysicalBeatmapObject<T extends GameplayObject> extends Wo
 
     protected Vector2f get2DPosition() {
         return new Vector2f(
-                (this.data.x - 1.5f) * 0.6f * -1,
-                (this.data.y) * 0.6f
+                (this.data.getLineIndex() - 1.5f) * 0.6f * -1,
+                (this.data.getNoteLineLayer()) * 0.6f
         );
     }
 
