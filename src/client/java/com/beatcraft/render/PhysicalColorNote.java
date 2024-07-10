@@ -32,11 +32,11 @@ public class PhysicalColorNote extends PhysicalBeatmapObject<IColorNote> {
         }
 
         if (colorJson != null) {
-            List<Float> floats = JsonUtil.parseArray(colorJson, Float.class);
+            List<Float> floats = JsonUtil.parseFloatArray(colorJson);
             this.color = Color.fromArray(floats.toArray(new Float[0]));
         }
         else {
-            this.color = null;
+            this.color = setDifficulty.getNoteColor(data.getColorType());
         }
 
         Quaternionf baseRotation = NoteMath.rotationFromCut(data.getCutDirection());
