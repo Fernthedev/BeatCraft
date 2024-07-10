@@ -96,7 +96,7 @@ public class BeatmapLoader {
 
             var fakeColorNotes = customData.getOrDefault("fakeColorNotes", null);
             if (fakeColorNotes != null) {
-                List<ColorNoteDataV3> notes = JsonUtil.parseArray(fakeColorNotes);
+                List<ColorNoteDataV3> notes = JsonUtil.parseNotesV3(fakeColorNotes);
 
                 for (ColorNoteDataV3 note : notes) {
                     beatmapDataV3.add(note);
@@ -105,7 +105,7 @@ public class BeatmapLoader {
 
             var fakeBombs = customData.getOrDefault("fakeBombs", null);
             if (fakeBombs != null) {
-                List<BombNoteDataV3> notes = JsonUtil.parseArray(fakeBombs);
+                List<BombNoteDataV3> notes = JsonUtil.parseBombsV3(fakeBombs);
 
                 for (BombNoteDataV3 note : notes) {
                     beatmapDataV3.add(note);

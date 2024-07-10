@@ -1,5 +1,6 @@
 package com.beatcraft.beatmap.data;
 
+import com.github.fernthedev.beatmap.ColorType;
 import com.google.gson.JsonObject;
 
 import java.nio.file.Path;
@@ -36,6 +37,14 @@ public class Info {
         public float njs;
         public float offset;
         public ColorScheme colorScheme;
+
+        public Color getNoteColor(ColorType noteType) {
+            if (noteType == ColorType.ColorA) {
+                return colorScheme.noteLeftColor;
+            } else {
+                return colorScheme.noteRightColor;
+            }
+        }
 
         public static SetDifficulty from(JsonObject json, Info info) {
             SetDifficulty setDifficulty = new SetDifficulty();

@@ -51,7 +51,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// beatmap
-	include(implementation('com.github.Fernthedev:kotlin-beatmaps:09121805d0'))
+	include(implementation('com.github.Fernthedev:kotlin-beatmaps:a8219fd556'))
 
 	// Vivecraft
 	modImplementation "maven.modrinth:vivecraft:1.20.4-1.1.9-fabric"

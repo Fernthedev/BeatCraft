@@ -1,5 +1,7 @@
 package com.beatcraft.beatmap
 
+import com.github.fernthedev.beatmap.impl.v3.BombNoteDataV3
+import com.github.fernthedev.beatmap.impl.v3.ColorNoteDataV3
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
@@ -12,13 +14,18 @@ object JsonUtil {
     }
 
     @JvmStatic
-    fun <T> parseArray(jsonElement: JsonElement): List<T> {
-        return JsonDefaultParser.decodeFromJsonElement<List<T>>(jsonElement)
+    fun parseNotesV3(jsonElement: JsonElement): List<ColorNoteDataV3> {
+        return JsonDefaultParser.decodeFromJsonElement<List<ColorNoteDataV3>>(jsonElement)
     }
 
     @JvmStatic
-    fun <T> parseArray(jsonElement: JsonElement, clazz: Class<T>): List<T> {
-        return parseArray(jsonElement)
+    fun parseBombsV3(jsonElement: JsonElement): List<BombNoteDataV3> {
+        return JsonDefaultParser.decodeFromJsonElement<List<BombNoteDataV3>>(jsonElement)
+    }
+
+    @JvmStatic
+    fun parseFloatArray(jsonElement: JsonElement): List<Float> {
+        return JsonDefaultParser.decodeFromJsonElement<List<Float>>(jsonElement)
     }
 
     @JvmStatic

@@ -6,7 +6,7 @@ import com.github.fernthedev.beatmap.IReadonlyBeatmapData
 object BeatmapJavaInterop {
     @JvmStatic
     fun <T : IBeatmapDataItem> getBeatmapItems(beatmapData: IReadonlyBeatmapData, clazz: Class<T>): Iterable<T> {
-        return beatmapData.getBeatmapItems<T>().asIterable()
+        return beatmapData.getBeatmapItems(clazz).asIterable()
     }
 
     @JvmStatic
