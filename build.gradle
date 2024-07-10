@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
+	id 'org.jetbrains.kotlin.jvm'
 }
 
 version = project.mod_version
@@ -22,6 +23,8 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+	mavenCentral()
+	maven { url 'https://jitpack.io' }
 }
 
 loom {
@@ -42,9 +45,14 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+	modImplementation("net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.0")
+
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
+
+	// beatmap
+	include(implementation('com.github.Fernthedev:kotlin-beatmaps:09121805d0'))
+
 	// Vivecraft
 	modImplementation "maven.modrinth:vivecraft:1.20.4-1.1.9-fabric"
 	include(implementation('com.electronwill.night-config:toml:3.6.6'))
@@ -59,6 +67,10 @@ processResources {
 	}
 }
 
+kotlin {
+	jvmToolchain(21)
+}
+
 tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
 }
@@ -69,8 +81,6 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
